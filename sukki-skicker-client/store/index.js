@@ -1,0 +1,67 @@
+import firebase from '~/plugins/firebase'
+import axios from "@/plugins/axios"
+
+export const state = () => ({
+  user: {
+    uid: '',
+    username: '',
+    profileIcon: '',
+    login: false,
+  },
+})
+
+export const getters = {
+  user: state => {
+    return state.user
+  }
+}
+
+export const actions = {
+  loginTwitter ({ dispatch }) {
+    var provider = new firebase.auth.TwitterAuthProvider()
+    firebase.auth().signInWithPopup(provider).then(result => {
+      dispatch('checkLogin')
+      console.log(result)
+    }).catch(function (error) {
+      console.log(error)
+    })
+  },
+  checkLogin ({ commit }) {
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        try {
+          const user_data = await axios.get(`/users?uid=${user.uid}`)
+          console.log('user', user_data.data)
+          if (!user_data.data.value) {
+            const new_user = {
+              username: user.displayName,
+              uid: user.uid
+            }
+            console.log('pls create new user', new_user)
+            axios.post("/users", new_user)
+          }
+        } catch (e) {
+          console.log('error in check login')
+          console.error(e)
+        }
+        commit('setUser', {
+          uid: user.uid,
+          username: user.displayName,
+          profileIcon: user.photoURL
+        })
+        commit('switchLogin')
+      }
+    })
+  },
+}
+
+export const mutations = {
+  setUser (state, payload) {
+    state.user.uid = payload.uid
+    state.user.username = payload.username
+    state.user.profileIcon = payload.profileIcon
+  },
+  switchLogin (state) {
+    state.user.login = true
+  },
+}

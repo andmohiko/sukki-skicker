@@ -1,11 +1,14 @@
+const environment = process.env.NODE_ENV || 'local'
+const env = require(`./env/${environment}.js`)
 
+require('dotenv').config()
 export default {
   mode: 'spa',
   /*
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'すっきーすきっかー',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -35,6 +38,7 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/dotenv',
   ],
   /*
   ** Nuxt.js modules
@@ -50,6 +54,7 @@ export default {
   */
   axios: {
   },
+  env: env,
   /*
   ** Build configuration
   */
