@@ -37,8 +37,9 @@ export const actions = {
               username: user.displayName,
               uid: user.uid
             }
-            console.log('pls create new user', new_user)
+            console.log('pls create new user', new_user.username)
             axios.post("/users", new_user)
+            console.log('user created')
           }
         } catch (e) {
           console.log('error in check login')
