@@ -1,3 +1,3 @@
 module.exports = {
-  API_ENDPOINT: 'https://minima-server.herokuapp.com/'
+  API_ENDPOINT: 'https://sukki-skicker-server.herokuapp.com/'
 }
