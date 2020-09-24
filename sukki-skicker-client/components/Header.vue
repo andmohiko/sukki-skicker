@@ -15,7 +15,7 @@
           <nuxt-link to="/login">ログイン</nuxt-link>
         </li>
         <li>
-          <img :src="user.profileIcon" alt="アイコン">
+          <img :src="user.profileIcon" alt="ic">
         </li>
       </ul>
     </nav>
