@@ -9,15 +9,38 @@
         </div>
       </div>
     </div>
+    <div class="skickers">
+      <div class="title">
+        すきっかー一覧
+      </div>
+      <div
+        v-for="skicker in skickers"
+        :key="skicker.id"
+        class="skickers-list"
+      >
+        名前: {{ skicker.name }}
+      </div>
+      <div class="title">
+        すきっかー追加
+      </div>
+      comming soon
+    </div>
   </div>
 </template>
 
 <script>
+import axios from "@/plugins/axios"
+
 export default {
+  components: {
+  },
   computed: {
     user () {
       return this.$store.state.user
     },
+    skickers() {
+      return this.$store.state.skickers
+    }
   },
   methods : {
     loginTwitter() {
@@ -48,5 +71,9 @@ export default {
 img {
   width: 100px;
   height: auto;
+}
+.title {
+  margin-top: 40px;
+  font-size: 24px;
 }
 </style>

@@ -8,11 +8,15 @@ export const state = () => ({
     profileIcon: '',
     login: false,
   },
+  skickers: []
 })
 
 export const getters = {
   user: state => {
     return state.user
+  },
+  skickers: state => {
+    return state.skickers
   }
 }
 
@@ -51,6 +55,8 @@ export const actions = {
           profileIcon: user.photoURL
         })
         commit('switchLogin')
+        const skickers_data = await axios.get(`/skickers?uid=${user.uid}`)
+        commit('setSkickers', skickers_data.data.value)
       }
     })
   },
@@ -65,4 +71,7 @@ export const mutations = {
   switchLogin (state) {
     state.user.login = true
   },
+  setSkickers (state, payload) {
+    state.skickers = payload
+  }
 }
