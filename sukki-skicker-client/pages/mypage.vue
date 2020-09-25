@@ -28,14 +28,45 @@
         </li>
       </ul>
       <div class="sukipis-add">
-        coming soon
+        <div class="w-full max-w-xs">
+          <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                すきぴの名前
+              </label>
+              <input
+                v-model="newSukipi"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="text"
+                placeholder="かれぴっぴ">
+            </div>
+            <div class="flex items-center justify-center">
+              <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="button"
+                @click="addSukipi"
+              >
+                追加
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "@/plugins/axios"
+
 export default {
+  components: {
+  },
+  data() {
+    return {
+      newSukipi: ''
+    }
+  },
   computed: {
     user() {
       return this.$store.state.user
@@ -52,6 +83,22 @@ export default {
         sukipi_id: sukipi.id
       })
       console.log('set sukipi', this.$store.state.sukipi)
+    },
+    async addSukipi() {
+      const new_sukipi = {
+        name: this.newSukipi,
+        user_id: this.user.user_id,
+        suki: 0
+      }
+      try {
+        axios.post("/sukipis", new_sukipi)
+        console.log('new sukipi created', new_sukipi)
+        const sukipis_data = await axios.get(`/sukipis?uid=${this.user.uid}`)
+        this.$store.commit('setSukipis', sukipis_data.data.value)
+        console.log(this.sukipis)
+      } catch {
+        console.log('error adding sukipi')
+      }
     }
   }
 }
