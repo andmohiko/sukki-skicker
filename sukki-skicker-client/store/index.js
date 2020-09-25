@@ -8,11 +8,20 @@ export const state = () => ({
     profileIcon: '',
     login: false,
   },
+  sukipis: [],
+  sukipi: {
+    name: '',
+    suki: '',
+    sukipi_id: ''
+  }
 })
 
 export const getters = {
   user: state => {
     return state.user
+  },
+  sukipis: state => {
+    return state.sukipis
   }
 }
 
@@ -51,18 +60,28 @@ export const actions = {
           profileIcon: user.photoURL
         })
         commit('switchLogin')
+        const sukipis_data = await axios.get(`/sukipis?uid=${user.uid}`)
+        commit('setSukipis', sukipis_data.data.value)
       }
     })
   },
 }
 
 export const mutations = {
-  setUser (state, payload) {
+  setUser(state, payload) {
     state.user.uid = payload.uid
     state.user.username = payload.username
     state.user.profileIcon = payload.profileIcon
   },
-  switchLogin (state) {
+  switchLogin(state) {
     state.user.login = true
   },
+  setSukipis(state, payload) {
+    state.sukipis = payload
+  },
+  setSukipi(state, payload) {
+    state.sukipi.name = payload.name
+    state.sukipi.suki = payload.suki
+    state.sukipi.sukipi_id = payload.sukipi_id
+  }
 }
