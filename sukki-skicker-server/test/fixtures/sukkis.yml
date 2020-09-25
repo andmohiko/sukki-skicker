@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  suki: 1
+  user: one
+  skicker: one
+
+two:
+  suki: 1
+  user: two
+  skicker: two

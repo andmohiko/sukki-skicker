@@ -8,7 +8,13 @@ export const state = () => ({
     profileIcon: '',
     login: false,
   },
-  skickers: []
+  skickers: [],
+  sukkis: [],
+  sukipi: {
+    name: '',
+    skicker_id: '',
+    suki: '',
+  }
 })
 
 export const getters = {
@@ -17,6 +23,9 @@ export const getters = {
   },
   skickers: state => {
     return state.skickers
+  },
+  sukkis: state => {
+    return state.sukkis
   }
 }
 
@@ -57,6 +66,8 @@ export const actions = {
         commit('switchLogin')
         const skickers_data = await axios.get(`/skickers?uid=${user.uid}`)
         commit('setSkickers', skickers_data.data.value)
+        const sukkis_data = await axios.get(`/sukkis?uid=${user.uid}`)
+        commit('setSukkis', sukkis_data.data.value)
       }
     })
   },
@@ -73,5 +84,13 @@ export const mutations = {
   },
   setSkickers (state, payload) {
     state.skickers = payload
+  },
+  setSukkis (state, payload) {
+    state.sukkis = payload
+  },
+  setSukipi (state, payload) {
+    state.sukipi.name = payload.name
+    state.sukipi.skicker_id = payload.skicker_id
+    state.sukipi.suki = payload.suki
   }
 }

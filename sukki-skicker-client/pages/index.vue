@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    {{ sukipi.name }}
     <button
       class="skick"
       type="button"
@@ -23,9 +24,31 @@ export default Vue.extend({
   },
   components: {
   },
+  mounted() {
+    this.suki = this.$store.state.sukipi.suki
+    console.log('sukkis', this.$store.state.sukkis)
+  },
+  computed: {
+    user () {
+      return this.$store.state.user
+    },
+    skickers() {
+      return this.$store.state.skickers
+    },
+    sukipi() {
+      return this.$store.state.sukipi
+    }
+  },
   methods : {
     skick() {
-      this.suki = this.suki + 1
+      try {
+        this.suki = this.suki + 1
+        axios.patch(`/sukkis/${this.sukipi.skicker_id}`, {
+          suki: this.suki
+        })
+      } catch {
+        console.log('failed to skick')
+      }
     }
   }
 })

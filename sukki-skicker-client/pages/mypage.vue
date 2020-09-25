@@ -19,11 +19,26 @@
         class="skickers-list"
       >
         名前: {{ skicker.name }}
+        {{ skicker }}
+        <button
+          class="bg-blue hover:bg-blue-dark text-black font-bold py-2 px-4 rounded"
+          type="button"
+          @click="selectSukipi(skicker)"
+        >
+          この人にすきを送る
+        </button>
       </div>
       <div class="title">
         すきっかー追加
       </div>
       comming soon
+      <button
+        class="bg-blue hover:bg-blue-dark text-black font-bold py-2 px-4 rounded"
+        type="button"
+        @click="reflectSukki"
+      >
+        すきを反映する
+      </button>
     </div>
   </div>
 </template>
@@ -54,6 +69,20 @@ export default {
     },
     toLogin() {
       this.$router.push("/login");
+    },
+    selectSukipi(skicker) {
+      console.log(skicker)
+      this.$store.commit('setSukipi', {
+        name: skicker.name,
+        skicker_id: skicker.id,
+        suki: this.$store.state.sukkis[0].suki
+      })
+      console.log('sukipi set')
+    },
+    async reflectSukki() {
+      const sukkis_data = await axios.get(`/sukkis?uid=${this.user.uid}`)
+      console.log('set sukkis data', sukkis_data.data.value)
+      this.$store.commit('setSukkis', sukkis_data.data.value)
     }
   }
 }
