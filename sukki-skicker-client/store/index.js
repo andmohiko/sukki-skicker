@@ -3,6 +3,7 @@ import axios from "@/plugins/axios"
 
 export const state = () => ({
   user: {
+    user_id: '',
     uid: '',
     username: '',
     profileIcon: '',
@@ -54,7 +55,9 @@ export const actions = {
           console.log('error in check login')
           console.error(e)
         }
+        const user_data = await axios.get(`/users?uid=${user.uid}`)
         commit('setUser', {
+          user_id: user_data.data.value.id,
           uid: user.uid,
           username: user.displayName,
           profileIcon: user.photoURL
@@ -69,6 +72,7 @@ export const actions = {
 
 export const mutations = {
   setUser(state, payload) {
+    state.user.user_id = payload.user_id
     state.user.uid = payload.uid
     state.user.username = payload.username
     state.user.profileIcon = payload.profileIcon
