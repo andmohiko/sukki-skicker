@@ -6,10 +6,10 @@
           {{ user.username }}
         </li>
         <li>
-          <nuxt-link to="/">すきすきする</nuxt-link>
+          <nuxt-link to="/">すきを送る</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/skickers">火力を上げる</nuxt-link>
+          <nuxt-link to="/skickers">火力</nuxt-link>
         </li>
         <li>
           <nuxt-link to="/mypage">マイページ</nuxt-link>
