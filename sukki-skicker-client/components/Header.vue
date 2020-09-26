@@ -9,13 +9,13 @@
           <nuxt-link to="/">すきすきする</nuxt-link>
         </li>
         <li>
+          <nuxt-link to="/skickers">火力を上げる</nuxt-link>
+        </li>
+        <li>
           <nuxt-link to="/mypage">マイページ</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/login">ログイン</nuxt-link>
-        </li>
-        <li>
-          <img :src="user.profileIcon" alt="ic">
+          <nuxt-link to="/mypage"><img :src="user.profileIcon" alt="ic"></nuxt-link>
         </li>
       </ul>
     </nav>
