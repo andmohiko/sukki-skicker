@@ -3,11 +3,19 @@
     <h1 class="text-center text-lg">マイページ</h1>
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
       <div v-if="user.login" class="bg-white rounded-lg p-6">
+        <p class="text">ログイン済み</p>
         <img class="h-16 w-16 rounded-full mx-auto" :src="user.profileIcon">
         <div class="text-center">
           <h2 class="text-lg">{{ user.username }}</h2>
         </div>
       </div>
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        type="button"
+        @click="loginTwitter"
+      >
+        Twitterでログイン
+      </button>
     </div>
     <div class="sukipis">
       <h2 class="title">すきぴ一覧</h2>
@@ -99,6 +107,9 @@ export default {
       } catch {
         console.log('error adding sukipi')
       }
+    },
+    loginTwitter() {
+      this.$store.dispatch('loginTwitter')
     }
   }
 }

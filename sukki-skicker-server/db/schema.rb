@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_25_142736) do
+ActiveRecord::Schema.define(version: 2020_09_26_010621) do
+
+  create_table "skickers", force: :cascade do |t|
+    t.string "name"
+    t.integer "power"
+    t.integer "cost"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "sukipis", force: :cascade do |t|
     t.string "name"
