@@ -3,7 +3,7 @@
     <nav>
       <ul>
         <li>
-          {{ user.username }}
+          {{ user.username.slice(0, 3) }}
         </li>
         <li>
           <nuxt-link to="/">すきを送る</nuxt-link>
