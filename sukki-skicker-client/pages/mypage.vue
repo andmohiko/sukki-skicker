@@ -9,13 +9,7 @@
           <h2 class="text-lg">{{ user.username }}</h2>
         </div>
       </div>
-      <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        type="button"
-        @click="loginTwitter"
-      >
-        Twitterでログイン
-      </button>
+      <Button :label-name="'Twitterでログイン'" @onClick="loginTwitter" />
     </div>
     <div class="sukipis">
       <h2 class="title">すきぴ一覧</h2>
@@ -49,13 +43,7 @@
                 placeholder="かれぴっぴ">
             </div>
             <div class="flex items-center justify-center">
-              <button
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
-                @click="addSukipi"
-              >
-                追加
-              </button>
+              <Button :label-name="'追加'" :width="'100px'" @onClick="addSukipi" />
             </div>
           </form>
         </div>
@@ -66,9 +54,11 @@
 
 <script>
 import axios from "@/plugins/axios"
+import Button from "@/components/Button.vue";
 
 export default {
   components: {
+    Button
   },
   data() {
     return {
@@ -131,5 +121,8 @@ img {
 .title {
   font-size: 24px;
   margin-top: 40px;
+}
+.sukipi-name {
+  margin: 20px;
 }
 </style>
