@@ -38,10 +38,10 @@ export default {
   top: 0;
   right: 0;
   left: 0;
-  background-color: transparent;
+  background-color: white;
   width: 100vw;
-  height: 80px;
-  line-height: 80px;
+  height: 70px;
+  line-height: 70px;
   padding: 0px 5%;
   border-bottom-style: solid; 
   border-bottom-width: 0.5px;

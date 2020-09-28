@@ -48,6 +48,16 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
   ],
+  manifest: {
+    name: "すっきーすきっかー",
+    short_name: "すきすき",
+    theme_color: "#f3218c",
+    background_color: "#ffd4ef",
+    lang: "ja",
+    display: "standalone",
+    scope: "/",
+    start_url: "/"
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
