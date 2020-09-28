@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_26_010621) do
+ActiveRecord::Schema.define(version: 2020_09_26_061824) do
+
+  create_table "skicker_users", force: :cascade do |t|
+    t.integer "skicker_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["skicker_id"], name: "index_skicker_users_on_skicker_id"
+    t.index ["user_id"], name: "index_skicker_users_on_user_id"
+  end
 
   create_table "skickers", force: :cascade do |t|
     t.string "name"
@@ -36,5 +45,7 @@ ActiveRecord::Schema.define(version: 2020_09_26_010621) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "skicker_users", "skickers"
+  add_foreign_key "skicker_users", "users"
   add_foreign_key "sukipis", "users"
 end

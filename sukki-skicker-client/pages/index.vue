@@ -48,11 +48,14 @@ export default Vue.extend({
     },
     sukipis() {
       return this.$store.state.sukipis
+    },
+    currentSkicker() {
+      return this.$store.state.currentSkicker
     }
   },
   methods : {
     skick() {
-      this.suki = this.suki + 1
+      this.suki = this.suki + this.currentSkicker.power
       axios.put(`/sukipis/${this.sukipi.sukipi_id}`, {
         suki: this.suki
       })
