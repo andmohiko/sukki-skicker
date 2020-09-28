@@ -4,7 +4,7 @@ class SkickerUsersController < ApplicationController
   def index
     if params[:uid]
       @current_user = User.find_by(uid: params[:uid])
-      render json: { status: 'SUCCESS', message: 'Loaded users', value: @current_user.skickers }
+      render json: { status: 'SUCCESS', message: 'Loaded users', value: @current_user.skickers.order(power: :desc) }
     else
       skicker_users = SkickerUser.all
       render json: { status: 'SUCCESS', message: 'Loaded skicker_users', value: skicker_users }
