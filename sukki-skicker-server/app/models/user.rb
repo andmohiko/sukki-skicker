@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :skickers, through: :skicker_users
 
   def sukipis
-    Sukipi.where(user_id: id)
+    Sukipi.where(user_id: id).order(updated_at: :desc)
   end
 
 end

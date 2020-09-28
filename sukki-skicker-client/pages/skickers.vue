@@ -15,7 +15,6 @@
             <tr>
               <th class="w-1/2 px-4 py-2">すきっかー</th>
               <th class="w-1/4 px-4 py-2">火力</th>
-              <th class="w-1/4 px-4 py-2">コスト</th>
               <th class="w-1/4 px-4 py-2">セットする</th>
             </tr>
           </thead>
@@ -26,7 +25,6 @@
             >
               <td class="border px-4 py-2">{{ skicker.name }}</td>
               <td class="border px-4 py-2">{{ skicker.power }}</td>
-              <td class="border px-4 py-2">{{ skicker.cost }}</td>
               <td class="border px-4 py-2">
                 <Button label-name="セット" :width="'100px'" @onClick="setSkicker(skicker)" />
               </td>
