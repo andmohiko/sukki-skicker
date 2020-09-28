@@ -12,6 +12,8 @@
       <Button :label-name="'Twitterでログイン'" @onClick="loginTwitter" />
     </div>
     <div class="sukipis">
+      <h2 class="title">選択中のすきぴ</h2>
+      <p>{{ currentSukipi.name }}, {{ currentSukipi.suki }}</p>
       <h2 class="title">すきぴ一覧</h2>
       <ul class="sukipis-list">
         <li
@@ -71,16 +73,18 @@ export default {
     },
     sukipis() {
       return this.$store.state.sukipis
+    },
+    currentSukipi() {
+      return this.$store.state.currentSukipi
     }
   },
   methods : {
     selectSukipi(sukipi) {
-      this.$store.commit('setSukipi', {
+      this.$store.commit('setCurrentSukipi', {
         name: sukipi.name,
         suki: sukipi.suki,
         sukipi_id: sukipi.id
       })
-      console.log('set sukipi', this.$store.state.sukipi)
     },
     async addSukipi() {
       const new_sukipi = {

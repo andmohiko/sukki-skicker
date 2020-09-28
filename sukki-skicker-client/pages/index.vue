@@ -37,14 +37,14 @@ export default Vue.extend({
   components: {
   },
   mounted() {
-    this.suki = this.$store.state.sukipi.suki
+    this.suki = this.$store.state.currentSukipi.suki
   },
   computed: {
     user() {
       return this.$store.state.user
     },
     sukipi() {
-      return this.$store.state.sukipi
+      return this.$store.state.currentSukipi
     },
     sukipis() {
       return this.$store.state.sukipis
@@ -59,7 +59,7 @@ export default Vue.extend({
       axios.put(`/sukipis/${this.sukipi.sukipi_id}`, {
         suki: this.suki
       })
-      this.$store.commit('setSukipi', {
+      this.$store.commit('setCurrentSukipi', {
         name: this.sukipi.name,
         suki: this.suki,
         sukipi_id: this.sukipi.sukipi_id
