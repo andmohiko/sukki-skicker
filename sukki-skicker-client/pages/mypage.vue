@@ -25,7 +25,7 @@
           <button
             class="bg-blue hover:bg-blue-dark text-black font-bold py-2 px-4 rounded"
             type="button"
-            @click="selectSukipi(sukipi)"
+            @click="setSukipi(sukipi)"
           >
             この人にすきを送る
           </button>
@@ -62,6 +62,10 @@ export default {
   components: {
     Button
   },
+  async asyncData({ store }) {
+    const sukipis_data = await axios.get(`/sukipis?uid=${store.state.user.uid}`)
+    store.commit('setSukipis', sukipis_data.data.value)
+  },
   data() {
     return {
       newSukipi: ''
@@ -78,8 +82,8 @@ export default {
       return this.$store.state.currentSukipi
     }
   },
-  methods : {
-    selectSukipi(sukipi) {
+  methods: {
+    setSukipi(sukipi) {
       this.$store.commit('setCurrentSukipi', {
         name: sukipi.name,
         suki: sukipi.suki,
@@ -93,11 +97,16 @@ export default {
         suki: 0
       }
       try {
-        axios.post("/sukipis", new_sukipi)
-        console.log('new sukipi created', new_sukipi)
+        const created_sukipi = await axios.post("/sukipis", new_sukipi)
+        console.log('new sukipi created', created_sukipi.data.data)
         const sukipis_data = await axios.get(`/sukipis?uid=${this.user.uid}`)
         this.$store.commit('setSukipis', sukipis_data.data.value)
         console.log(this.sukipis)
+        this.setSukipi({
+          name: created_sukipi.data.data.name,
+          suki: created_sukipi.data.data.suki,
+          id: created_sukipi.data.data.id,
+        })
       } catch {
         console.log('error adding sukipi')
       }

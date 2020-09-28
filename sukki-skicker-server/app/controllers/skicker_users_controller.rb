@@ -20,6 +20,14 @@ class SkickerUsersController < ApplicationController
     end
   end
 
+  def destroy
+    if @skicker_user.destroy
+      render json: { status: 'SUCCESS', message: 'Deleted the skicker_user', data: @skicker_user }
+    else
+      render json: @skicker_user.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_skicker_user

@@ -3,7 +3,7 @@ class User < ApplicationRecord
   validates :uid, presence: true
 
   has_many :sukipis, dependent: :destroy
-  has_many :skicker_users
+  has_many :skicker_users, dependent: :destroy
   has_many :skickers, through: :skicker_users
 
   def sukipis
