@@ -17,7 +17,15 @@ class SkickersController < ApplicationController
     if skicker.save
       render json: { status: 'SUCCESS', message: 'Created skicker', data: skicker }
     else
-      render json: { status: 'ERROR', message: 'Failed to create sukipi', data: sukipi.errors }
+      render json: { status: 'ERROR', message: 'Failed to create skicker', data: skicker.errors }
+    end
+  end
+
+  def update
+    if @skicker.update(skicker_params)
+      render json: { status: 'SUCCESS', message: 'Updated skicker', data: @skicker }
+    else
+      render json: { status: 'SUCCESS', message: 'Not updated', data: @skicker.errors }
     end
   end
 
