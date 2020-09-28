@@ -1,5 +1,6 @@
 <template>
   <div class="skickers">
+    <BuySkickerModal :skicker="buyingSkicker" />
     <h1 class="title">すきっかーで火力をあげよう</h1>
     <div class="skickers-own flex flex-col items-center justify-center">
       <h2>セットされているすきっかー</h2>
@@ -40,6 +41,7 @@
         <table class="table-fixed">
           <thead>
             <tr>
+              <th class="w-1/2 px-4 py-2">id</th>
               <th class="w-1/2 px-4 py-2">すきっかー</th>
               <th class="w-1/4 px-4 py-2">火力</th>
               <th class="w-1/4 px-4 py-2">コスト</th>
@@ -51,11 +53,12 @@
               v-for="skicker in allSkickers"
               :key="skicker.id"
             >
+              <td class="border px-4 py-2">{{ skicker.id }}</td>
               <td class="border px-4 py-2">{{ skicker.name }}</td>
               <td class="border px-4 py-2">{{ skicker.power }}</td>
               <td class="border px-4 py-2">{{ skicker.cost }}</td>
               <td class="border px-4 py-2">
-                <Button :label-name="'購入'" :width="'100px'" @onClick="buySkicker" />
+                <Button :label-name="'購入'" :width="'100px'" @onClick="buySkicker(skicker)" />
               </td>
             </tr>
           </tbody>
@@ -68,12 +71,16 @@
 <script>
 import axios from "@/plugins/axios"
 import Button from "@/components/Button.vue";
+import BuySkickerModal from "@/components/BuySkickerModal.vue";
 
 export default {
   components: {
-    Button
+    Button,
+    BuySkickerModal
   },
-  async asyncData() {
+  async asyncData({ store }) {
+    const sukipis_data = await axios.get(`/sukipis?uid=${store.state.user.uid}`)
+    store.commit('setSukipis', sukipis_data.data.value)
     const all_skickers_data = await axios.get(`/skickers`)
     return {
       allSkickers: all_skickers_data.data.value
@@ -82,7 +89,8 @@ export default {
   data() {
     return {
       allSkickers: [],
-      usersSkickers: []
+      usersSkickers: [],
+      buyingSkicker: {}
     }
   },
   computed: {
@@ -107,7 +115,9 @@ export default {
         power: skicker.power
       })
     },
-    buySkicker() {}
+    buySkicker(skicker) {
+      this.buyingSkicker = skicker
+    }
   }
 }
 </script>

@@ -62,7 +62,12 @@ export const actions = {
               uid: user.uid
             }
             console.log('pls create new user', new_user.username)
-            axios.post("/users", new_user)
+            const created_user = await axios.post("/users", new_user)
+            console.log(created_user.data)
+            axios.post("/skicker_users", {
+              "user_id": created_user.data.id,
+              "skicker_id": 1
+            })
             console.log('user created')
           }
         } catch (e) {
