@@ -15,7 +15,9 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'apple-touch-icon', type: 'image/png', href: '/static/icon.png'
+      }
     ]
   },
   /*
@@ -56,7 +58,10 @@ export default {
     lang: "ja",
     display: "standalone",
     scope: "/",
-    start_url: "/"
+    start_url: "/",
+    icon: {
+      iconFileName: 'static/icon.png'
+    }
   },
   /*
   ** Axios module configuration
