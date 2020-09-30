@@ -21,12 +21,32 @@
         すきを反映する
       </button>
     </div>
+    <div style="margin: 0;">
+      <a
+        href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+        class="twitter-share-button"
+        data-size="large"
+        :data-url="originalReferer"
+        :data-text="twitterShareText"
+        data-show-count="false"
+        >Tweet</a
+      >
+      <script
+        async
+        src="https://platform.twitter.com/widgets.js"
+        charset="utf-8"
+      ></script>
+    </div>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import axios from '@/plugins/axios'
+
+const makeShareText = (
+  suki, sukipi
+) => `${sukipi.name} に ${suki} すき送ったよ`
 
 export default Vue.extend({
   middleware: 'authLogin',
@@ -52,6 +72,9 @@ export default Vue.extend({
     },
     currentSkicker() {
       return this.$store.state.currentSkicker
+    },
+    twitterShareText() {
+      return makeShareText(this.suki, this.sukipi)
     }
   },
   methods : {
