@@ -30,9 +30,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      render json: @user, status: :created
+      @skicker_user = SkickerUser.create(user_id: @user.id, skicker_id: 1)
+      render json: { status: :created, message: 'Created user', value: { user: @user, skicker_user: @skicker_user } }
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: { status: :unprocessable_entity, message: 'Created user', value: { user: @user.errors, skicker_user: @skicker_user.errors } }
     end
   end
 
