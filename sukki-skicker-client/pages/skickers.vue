@@ -74,6 +74,7 @@ import Button from "@/components/Button.vue";
 import BuySkickerModal from "@/components/BuySkickerModal.vue";
 
 export default {
+  middleware: 'authLogin',
   components: {
     Button,
     BuySkickerModal

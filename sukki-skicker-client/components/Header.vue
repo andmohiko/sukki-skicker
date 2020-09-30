@@ -1,7 +1,7 @@
 <template>
   <header class="header-container">
     <nav>
-      <ul>
+      <ul v-if="user.login">
         <li>
           {{ user.username.slice(0, 3) }}
         </li>
@@ -16,6 +16,11 @@
         </li>
         <li>
           <nuxt-link to="/mypage"><img :src="user.profileIcon" alt="ic"></nuxt-link>
+        </li>
+      </ul>
+      <ul v-else>
+        <li>
+          <nuxt-link to="/login">ログイン</nuxt-link>
         </li>
       </ul>
     </nav>

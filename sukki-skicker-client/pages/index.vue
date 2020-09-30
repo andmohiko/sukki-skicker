@@ -29,6 +29,7 @@ import Vue from 'vue'
 import axios from '@/plugins/axios'
 
 export default Vue.extend({
+  middleware: 'authLogin',
   data() {
     return {
       suki: 0
