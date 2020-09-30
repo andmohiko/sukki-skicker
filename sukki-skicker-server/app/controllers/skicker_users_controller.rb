@@ -14,9 +14,9 @@ class SkickerUsersController < ApplicationController
   def create
     @skicker_user = SkickerUser.new(skicker_user_params)
     if @skicker_user.save
-      render json: { status: 'SUCCESS', message: 'Created skicker_user', data: @skicker_user }
+      render json: { status: 'SUCCESS', message: 'Created skicker_user', value: @skicker_user }
     else
-      render json: { status: 'ERROR', message: 'Failed to create skicker_user', data: @skicker_user.errors }
+      render json: { status: 'ERROR', message: 'Failed to create skicker_user', value: @skicker_user.errors }
     end
   end
 

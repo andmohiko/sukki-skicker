@@ -1,6 +1,8 @@
 <template>
   <div class="skickers">
-    <BuySkickerModal :skicker="buyingSkicker" />
+    <template v-if="isShowBuySkickerModal">
+      <BuySkickerModal :skicker="buyingSkicker" @close="closeModal" />
+    </template>
     <h1 class="title">すきっかーで火力をあげよう</h1>
     <div class="skickers-own flex flex-col items-center justify-center">
       <h2>セットされているすきっかー</h2>
@@ -10,7 +12,6 @@
     <div class="skickers-own flex flex-col items-center justify-center">
       <h2>すでに持っているすきっかー</h2>
       <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
-        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
         <table class="table-fixed">
           <thead>
             <tr>
@@ -33,10 +34,9 @@
           </tbody>
         </table>
       </div>
-      </div>
     </div>
     <div class="skickers-all flex flex-col items-center justify-center">
-      <h2>すきっかー一覧</h2>
+      <h2>購入できるすきっかー一覧</h2>
       <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
         <table class="table-fixed">
           <thead>
@@ -58,7 +58,8 @@
               <td class="border px-4 py-2">{{ skicker.power }}</td>
               <td class="border px-4 py-2">{{ skicker.cost }}</td>
               <td class="border px-4 py-2">
-                <Button :label-name="'購入'" :width="'100px'" @onClick="buySkicker(skicker)" />
+                <Button v-if="isAlreadyOwn(skicker)" :label-name="'購入'" :width="'100px'" :is-disabled="true" />
+                <Button v-else :label-name="'購入'" :width="'100px'" @onClick="buySkicker(skicker)" />
               </td>
             </tr>
           </tbody>
@@ -91,7 +92,8 @@ export default {
     return {
       allSkickers: [],
       usersSkickers: [],
-      buyingSkicker: {}
+      buyingSkicker: {},
+      isShowBuySkickerModal: false
     }
   },
   computed: {
@@ -103,6 +105,9 @@ export default {
     },
     currentSkicker() {
       return this.$store.state.currentSkicker
+    },
+    user_skickers_id() {
+      return this.user_skickers.map(skicker => skicker.id)
     }
   },
   methods: {
@@ -118,6 +123,13 @@ export default {
     },
     buySkicker(skicker) {
       this.buyingSkicker = skicker
+      this.isShowBuySkickerModal = true
+    },
+    closeModal() {
+      this.isShowBuySkickerModal = false
+    },
+    isAlreadyOwn(skicker) {
+      return this.user_skickers_id.includes(skicker.id)
     }
   }
 }
@@ -125,7 +137,7 @@ export default {
 
 <style scoped lang="scss">
 .skickers {
-  margin-top: 100px;
+  margin-top: 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
