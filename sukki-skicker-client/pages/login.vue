@@ -25,9 +25,7 @@ export default {
   methods : {
     loginTwitter() {
       this.$store.dispatch('loginTwitter')
-    },
-    toSkicker() {
-      this.$router.push("/");
+      this.$router.push('/')
     },
     toMypage() {
       this.$router.push("/mypage");

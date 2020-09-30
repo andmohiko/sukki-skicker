@@ -82,21 +82,27 @@ export const actions = {
           profileIcon: user.photoURL
         })
         commit('switchLogin')
-        const sukipis_data = await axios.get(`/sukipis?uid=${user.uid}`)
-        commit('setSukipis', sukipis_data.data.value)
-        const users_skickers_data = await axios.get(`skicker_users?uid=${user.uid}`)
-        commit('setUserSkickers', users_skickers_data.data.value)
-        commit('setCurrentSkicker', {
-          name: users_skickers_data.data.value[0].name,
-          power: users_skickers_data.data.value[0].power
-        })
-        const currentSukipi = sukipis_data.data.value[0]
-        console.log('currentSukipi', currentSukipi)
-        commit('setCurrentSukipi', {
-          name: currentSukipi.name,
-          suki: currentSukipi.suki,
-          sukipi_id: currentSukipi.id
-        })
+        try {
+          const sukipis_data = await axios.get(`/sukipis?uid=${user.uid}`)
+          commit('setSukipis', sukipis_data.data.value)
+          const users_skickers_data = await axios.get(`skicker_users?uid=${user.uid}`)
+          commit('setUserSkickers', users_skickers_data.data.value)
+          commit('setCurrentSkicker', {
+            name: users_skickers_data.data.value[0].name,
+            power: users_skickers_data.data.value[0].power
+          })
+          const currentSukipi = sukipis_data.data.value[0]
+          console.log('currentSukipi', currentSukipi)
+          commit('setCurrentSukipi', {
+            name: currentSukipi.name,
+            suki: currentSukipi.suki,
+            sukipi_id: currentSukipi.id
+          })
+        } catch (e) {
+          console.log('error in user items')
+          console.error(e)
+        }
+        this.$router.push('/')
       }
     })
   },
