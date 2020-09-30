@@ -68,9 +68,15 @@ export default {
           skicker_id: this.skicker.id
         }
         const boughtSkicker = await axios.post("/skicker_users", buyingSkicker)
+        const sukiBalance = sukipi.suki - this.skicker.cost
         const updatedSukipi = await axios.put(`/sukipis/${sukipi.id}`, {
-          suki: sukipi.suki - this.skicker.cost
+          suki: sukiBalance
         })
+        this.$store.commit('setCurrentSukipi', {
+            name: sukipi.name,
+            suki: sukiBalance,
+            sukipi_id: sukipi.id
+          })
         const users_skickers_data = await axios.get(`skicker_users?uid=${this.user.uid}`)
         this.$store.commit('setUserSkickers', users_skickers_data.data.value)
         this.$store.commit('setCurrentSkicker', {
