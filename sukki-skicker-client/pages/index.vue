@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <template v-if="isShowAddSukipiModal">
+      <AddSukipiModal @resetSuki="resetSuki" @close="closeModal" />
+    </template>
     <div class="sukipi">
       <p class="sukipi-title">この人にすきを送る</p>
       <p class="sukipi-name">{{ sukipi.name }}</p>
@@ -11,15 +14,6 @@
     >❤️</button>
     <div class="suki">
       {{ suki }}
-    </div>
-    <div>
-      <button
-        class="bg-blue hover:bg-blue-dark text-black font-bold py-2 px-4 rounded"
-        type="button"
-        @click="reflectSukipi"
-      >
-        すきを反映する
-      </button>
     </div>
     <div style="margin: 0;">
       <a
@@ -43,6 +37,7 @@
 <script>
 import Vue from 'vue'
 import axios from '@/plugins/axios'
+import AddSukipiModal from "@/components/AddSukipiModal.vue";
 
 const makeShareText = (
   suki, sukipi
@@ -50,15 +45,20 @@ const makeShareText = (
 
 export default Vue.extend({
   middleware: 'authLogin',
+  components: {
+    AddSukipiModal
+  },
   data() {
     return {
-      suki: 0
+      suki: 0,
+      isShowAddSukipiModal: false
     }
-  },
-  components: {
   },
   mounted() {
     this.suki = this.$store.state.currentSukipi.suki
+    if (this.$store.state.sukipis.length === 0) {
+      this.isShowAddSukipiModal = true
+    }
   },
   computed: {
     user() {
@@ -75,6 +75,9 @@ export default Vue.extend({
     },
     twitterShareText() {
       return makeShareText(this.suki, this.sukipi)
+    // },
+    // isShowAddSukipiModal() {
+    //   return this.sukipis.length === 0
     }
   },
   methods : {
@@ -92,6 +95,12 @@ export default Vue.extend({
     async reflectSukipi() {
       const sukipis_data = await axios.get(`/sukipis?uid=${this.user.uid}`)
       this.$store.commit('setSukipis', sukipis_data.data.value)
+    },
+    resetSuki() {
+      this.suki = 0
+    },
+    closeModal() {
+      this.isShowAddSukipiModal = false
     }
   }
 })

@@ -9,7 +9,7 @@
           <h2 class="text-lg">{{ user.username }}</h2>
         </div>
       </div>
-      <Button :label-name="'Twitterでログイン'" @onClick="loginTwitter" />
+      <Button :label-name="'Twitterでログインし直す'" @onClick="loginTwitter" />
     </div>
     <div class="sukipis">
       <h2 class="title">選択中のすきぴ</h2>
@@ -32,24 +32,11 @@
         </li>
       </ul>
       <div class="sukipis-add">
-        <div class="w-full max-w-xs">
-          <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <div class="mb-4">
-              <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                すきぴの名前
-              </label>
-              <input
-                v-model="newSukipi"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                placeholder="かれぴっぴ">
-            </div>
-            <div class="flex items-center justify-center">
-              <Button :label-name="'追加'" :width="'100px'" @onClick="addSukipi" />
-            </div>
-          </form>
-        </div>
+        <Button :label-name="'すきを送りたい人を追加する'" :width="'250px'" @onClick="openModal" />
       </div>
+      <template v-if="isShowAddSukipiModal">
+        <AddSukipiModal @resetSuki="resetSuki" @close="closeModal" />
+      </template>
     </div>
   </div>
 </template>
@@ -57,11 +44,13 @@
 <script>
 import axios from "@/plugins/axios"
 import Button from "@/components/Button.vue";
+import AddSukipiModal from "@/components/AddSukipiModal.vue";
 
 export default {
   middleware: 'authLogin',
   components: {
-    Button
+    Button,
+    AddSukipiModal
   },
   async asyncData({ store }) {
     const sukipis_data = await axios.get(`/sukipis?uid=${store.state.user.uid}`)
@@ -69,7 +58,7 @@ export default {
   },
   data() {
     return {
-      newSukipi: ''
+      isShowAddSukipiModal: false
     }
   },
   computed: {
@@ -91,29 +80,14 @@ export default {
         sukipi_id: sukipi.id
       })
     },
-    async addSukipi() {
-      const new_sukipi = {
-        name: this.newSukipi,
-        user_id: this.user.user_id,
-        suki: 0
-      }
-      try {
-        const created_sukipi = await axios.post("/sukipis", new_sukipi)
-        console.log('new sukipi created', created_sukipi.data.data)
-        const sukipis_data = await axios.get(`/sukipis?uid=${this.user.uid}`)
-        this.$store.commit('setSukipis', sukipis_data.data.value)
-        console.log(this.sukipis)
-        this.setSukipi({
-          name: created_sukipi.data.data.name,
-          suki: created_sukipi.data.data.suki,
-          id: created_sukipi.data.data.id,
-        })
-      } catch {
-        console.log('error adding sukipi')
-      }
-    },
     loginTwitter() {
       this.$store.dispatch('loginTwitter')
+    },
+    openModal() {
+      this.isShowAddSukipiModal = true
+    },
+    closeModal() {
+      this.isShowAddSukipiModal = false
     }
   }
 }
@@ -126,7 +100,7 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin-top: 100px;
+  margin: 100px 0;
 }
 img {
   width: 100px;
