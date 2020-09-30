@@ -59,6 +59,7 @@ import axios from "@/plugins/axios"
 import Button from "@/components/Button.vue";
 
 export default {
+  middleware: 'authLogin',
   components: {
     Button
   },
