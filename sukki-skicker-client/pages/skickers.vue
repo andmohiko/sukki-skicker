@@ -41,7 +41,6 @@
         <table class="table-fixed">
           <thead>
             <tr>
-              <th class="w-1/2 px-4 py-2">id</th>
               <th class="w-1/2 px-4 py-2">すきっかー</th>
               <th class="w-1/4 px-4 py-2">火力</th>
               <th class="w-1/4 px-4 py-2">コスト</th>
@@ -53,7 +52,6 @@
               v-for="skicker in allSkickers"
               :key="skicker.id"
             >
-              <td class="border px-4 py-2">{{ skicker.id }}</td>
               <td class="border px-4 py-2">{{ skicker.name }}</td>
               <td class="border px-4 py-2">{{ skicker.power }}</td>
               <td class="border px-4 py-2">{{ skicker.cost }}</td>
@@ -65,6 +63,7 @@
           </tbody>
         </table>
       </div>
+      <!-- <Button :label-name="'show'" :width="'100px'" @onClick="show" /> -->
     </div>
   </div>
 </template>
@@ -114,6 +113,7 @@ export default {
     show() {
       console.log(this.$store.state.user_skickers)
       console.log(this.user)
+      console.log(this.user_skickers[0].id)
     },
     setSkicker(skicker) {
       this.$store.commit('setCurrentSkicker', {
