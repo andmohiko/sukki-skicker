@@ -110,10 +110,11 @@ h2 {
   top: 0;
   left: 0;
   background: rgba(21, 28, 56, 0.568);
-  z-index: z(UpperMiddle);
+  z-index: 1;
 }
 .buy-skicker {
   position: relative;
+  z-index: 2;
 }
 .close {
   position: absolute;
